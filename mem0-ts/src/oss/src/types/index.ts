@@ -51,6 +51,7 @@ export interface Neo4jConfig {
   url: string;
   username: string;
   password: string;
+  database?: string;
 }
 
 export interface GraphStoreConfig {
@@ -66,6 +67,10 @@ export interface GraphStoreConfig {
   nodeDeduplicationThreshold?: number;
   /** Maximum results returned after BM25 reranking in graph search (default: 5) */
   bm25TopK?: number;
+  /** Strategy for LLM-based graph extraction. "tool_calling" uses OpenAI tool/function calling.
+   *  "json_prompting" uses prompt-engineered JSON responses for models without tool support.
+   *  Default: "tool_calling" */
+  extractionStrategy?: "tool_calling" | "json_prompting";
 }
 
 export interface MemoryConfig {
@@ -186,6 +191,7 @@ export const MemoryConfigSchema = z.object({
         url: z.string(),
         username: z.string(),
         password: z.string(),
+        database: z.string().optional(),
       }),
       llm: z
         .object({
@@ -198,6 +204,9 @@ export const MemoryConfigSchema = z.object({
       searchThreshold: z.number().min(0).max(1).optional(),
       nodeDeduplicationThreshold: z.number().min(0).max(1).optional(),
       bm25TopK: z.number().int().min(1).optional(),
+      extractionStrategy: z
+        .enum(["tool_calling", "json_prompting"])
+        .optional(),
     })
     .optional(),
   historyStore: z

@@ -23,7 +23,11 @@ interface Tool {
 }
 
 const normalizeEntities = (
-  entities: Array<{ source: string; relationship: string; destination: string }>,
+  entities: Array<{
+    source: string;
+    relationship: string;
+    destination: string;
+  }>,
 ) =>
   entities.map((item) => ({
     ...item,

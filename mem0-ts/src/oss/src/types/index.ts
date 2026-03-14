@@ -204,9 +204,7 @@ export const MemoryConfigSchema = z.object({
       searchThreshold: z.number().min(0).max(1).optional(),
       nodeDeduplicationThreshold: z.number().min(0).max(1).optional(),
       bm25TopK: z.number().int().min(1).optional(),
-      extractionStrategy: z
-        .enum(["tool_calling", "json_prompting"])
-        .optional(),
+      extractionStrategy: z.enum(["tool_calling", "json_prompting"]).optional(),
     })
     .optional(),
   historyStore: z

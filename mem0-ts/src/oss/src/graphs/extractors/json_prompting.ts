@@ -19,12 +19,17 @@ const stripMarkdownFences = (text: string): string =>
   text.replace(/^```(?:json)?\s*\n?/i, "").replace(/\n?```\s*$/i, "");
 
 const parseJsonResponse = (response: any): string => {
-  const raw = typeof response === "string" ? response : (response?.content ?? "");
+  const raw =
+    typeof response === "string" ? response : (response?.content ?? "");
   return stripMarkdownFences(raw.trim());
 };
 
 const normalizeEntities = (
-  entities: Array<{ source: string; relationship: string; destination: string }>,
+  entities: Array<{
+    source: string;
+    relationship: string;
+    destination: string;
+  }>,
 ) =>
   entities.map((item) => ({
     ...item,

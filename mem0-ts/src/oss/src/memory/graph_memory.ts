@@ -3,10 +3,7 @@ import { BM25 } from "../utils/bm25";
 import { MemoryConfig } from "../types";
 import { EmbedderFactory, LLMFactory } from "../utils/factory";
 import { Embedder } from "../embeddings/base";
-import {
-  createGraphExtractor,
-  GraphExtractor,
-} from "../graphs/extractors";
+import { createGraphExtractor, GraphExtractor } from "../graphs/extractors";
 import { logger } from "../utils/logger";
 
 interface SearchOutput {

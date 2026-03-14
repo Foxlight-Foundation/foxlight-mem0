@@ -10,6 +10,7 @@ import {
   DELETE_MEMORY_TOOL_GRAPH,
 } from "../tools";
 import { EXTRACT_RELATIONS_PROMPT, getDeleteMessages } from "../utils";
+import { LLM } from "../../llms/base";
 import { logger } from "../../utils/logger";
 
 interface Tool {
@@ -32,7 +33,7 @@ const normalizeEntities = (
   }));
 
 export class ToolCallingExtractor implements GraphExtractor {
-  private llm;
+  private llm: LLM;
   private customPrompt?: string;
   private customEntityPrompt?: string;
 

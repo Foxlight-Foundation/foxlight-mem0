@@ -3,7 +3,6 @@ import { BM25 } from "../utils/bm25";
 import { MemoryConfig } from "../types";
 import { EmbedderFactory, LLMFactory } from "../utils/factory";
 import { Embedder } from "../embeddings/base";
-import { LLM } from "../llms/base";
 import {
   createGraphExtractor,
   GraphExtractor,
@@ -33,8 +32,6 @@ export class MemoryGraph {
   private config: MemoryConfig;
   private graph: Driver;
   private embeddingModel: Embedder;
-  private llm: LLM;
-  private structuredLlm: LLM;
   private llmProvider: string;
   private extractor: GraphExtractor;
   private database?: string;
@@ -77,13 +74,12 @@ export class MemoryGraph {
     // This is what makes MEM0_GRAPH_LLM_MODEL take effect.
     const graphLlmConfig =
       this.config.graphStore?.llm?.config ?? this.config.llm.config;
-    this.llm = LLMFactory.create(this.llmProvider, graphLlmConfig);
-    this.structuredLlm = LLMFactory.create(this.llmProvider, graphLlmConfig);
+    const graphLlm = LLMFactory.create(this.llmProvider, graphLlmConfig);
 
     this.extractor = createGraphExtractor(
       config.graphStore?.extractionStrategy ?? "tool_calling",
       {
-        llm: this.structuredLlm,
+        llm: graphLlm,
         customPrompt: config.graphStore?.customPrompt,
         customEntityPrompt: config.graphStore?.customEntityPrompt,
       },

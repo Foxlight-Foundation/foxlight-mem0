@@ -11,6 +11,7 @@ import {
   ENTITY_TYPES,
 } from "../tools";
 import { EXTRACT_RELATIONS_PROMPT, getDeleteMessages } from "../utils";
+import { LLM } from "../../llms/base";
 import { logger } from "../../utils/logger";
 import { z } from "zod";
 
@@ -67,7 +68,7 @@ If no relationships should be deleted, respond with { "deletions": [] }.
 }`;
 
 export class JsonPromptExtractor implements GraphExtractor {
-  private llm;
+  private llm: LLM;
   private customPrompt?: string;
   private customEntityPrompt?: string;
 
